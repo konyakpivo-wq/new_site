@@ -18,12 +18,11 @@
 <footer><a href="https://t.me/+mId42Q-ts8wyZWE0">Наш Telegram</a></footer>
 <script>
 (async()=>{
-  const base='/new_site';
-  const path=decodeURIComponent(location.pathname);
-  const m=path.match(new RegExp(base.replace(/[.*+?^$()|[\\]\\\\]/g,'\\\\$&')+'\\\\/newmcmods\\\\/([^/]+)\\\\/?$'));
-  if(!m) return;
-  const slug=m[1].toLowerCase();
-  if(!/^[a-z0-9_-]+$/.test(slug)) return;
+  const path=decodeURIComponent(location.pathname).replace(/\/+$/,'');
+  const prefix='/new_site/newmcmods/';
+  if(!path.toLowerCase().startsWith(prefix)) return;
+  const slug=path.slice(prefix.length).split('/')[0].toLowerCase();
+  if(!slug || !/^[a-z0-9_-]+$/.test(slug)) return;
   try{
     const r=await fetch('https://api.github.com/repos/konyakpivo-wq/new_mods/contents/'+encodeURIComponent(slug));
     if(!r.ok) return;
