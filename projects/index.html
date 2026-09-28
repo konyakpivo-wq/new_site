@@ -15,7 +15,26 @@
 <a class="card" href="/new_site/newmcmods/bunmod"><div class="icon">🧱</div><h2>MC Mods — BunMod</h2><p>Minecraft-мод с исходным кодом в new_mods.</p></a>
 <a class="card" href="/new_site/mcmewmods"><div class="icon">🎮</div><h2>mcmewmods</h2><p>Minecraft-проект.</p></a>
 </div>
+<div id="mods" class="grid"></div>
 </main>
 <footer><a href="https://t.me/+mId42Q-ts8wyZWE0">Наш Telegram</a></footer>
+<script>
+(async()=>{
+  try{
+    const r=await fetch('https://api.github.com/repos/konyakpivo-wq/new_mods/contents');
+    if(!r.ok) return;
+    const items=await r.json();
+    if(!Array.isArray(items)) return;
+    const box=document.getElementById('mods');
+    items.filter(x=>x.type==='dir').forEach(x=>{
+      const a=document.createElement('a');
+      a.className='card';
+      a.href='/new_site/newmcmods/'+encodeURIComponent(x.name);
+      a.innerHTML='<div class="icon">🧱</div><h2>'+x.name.replace(/[<>&"]/g,'')+'</h2><p>Minecraft-мод из репозитория new_mods.</p>';
+      box.appendChild(a);
+    });
+  }catch(e){}
+})();
+</script>
 </body>
 </html>
