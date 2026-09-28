@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Страница не найдена</title>
+<link rel="stylesheet" href="/new_site/style.css">
+</head>
+<body>
+<header class="top"><a href="/new_site/">New Projects</a><nav><a href="/new_site/projects">Проекты</a><a href="https://t.me/+mId42Q-ts8wyZWE0">Telegram</a></nav></header>
+<main class="page error">
+<div class="badge">404</div>
+<h1 id="title">Такой страницы не существует</h1>
+<p id="text">Проверь адрес или вернись на главную.</p>
+<div id="modArea"></div>
+<a class="button" href="/new_site/">На главную</a>
+</main>
+<footer><a href="https://t.me/+mId42Q-ts8wyZWE0">Наш Telegram</a></footer>
+<script>
+(async()=>{
+  const base='/new_site';
+  const path=decodeURIComponent(location.pathname);
+  const m=path.match(new RegExp(base.replace(/[.*+?^$()|[\\]\\\\]/g,'\\\\$&')+'\\\\/newmcmods\\\\/([^/]+)\\\\/?$'));
+  if(!m) return;
+  const slug=m[1].toLowerCase();
+  if(!/^[a-z0-9_-]+$/.test(slug)) return;
+  try{
+    const r=await fetch('https://api.github.com/repos/konyakpivo-wq/new_mods/contents/'+encodeURIComponent(slug));
+    if(!r.ok) return;
+    const data=await r.json();
+    if(!Array.isArray(data)) return;
+    document.getElementById('title').textContent=slug;
+    document.getElementById('text').textContent='Проект найден в репозитории new_mods.';
+    const a=document.createElement('a');
+    a.className='button';
+    a.href='https://github.com/konyakpivo-wq/new_mods/tree/main/'+encodeURIComponent(slug);
+    a.textContent='Исходный код';
+    document.getElementById('modArea').appendChild(a);
+  }catch(e){}
+})();
+</script>
+</body>
+</html>
